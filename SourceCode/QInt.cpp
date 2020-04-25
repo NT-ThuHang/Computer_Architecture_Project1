@@ -23,15 +23,38 @@ istream& operator >>(istream& is, QInt& a)
 	string st;
 	is >> st;
 	long k = 0;
-	while (st.length() != 0)
+	if (st[0] == '-')
 	{
-		if ((st[st.length() - 1] - '0') % 2 == 1)
+		st.erase(0, 1);
+		int temp = 1;
+		while (st.length() != 0)
 		{
-			a.data[k / 32] += pow(2, k % 32);
-
+			int x = 1 - ((st[st.length() - 1] - '0') % 2);
+			if ((x == 1 && temp == 0) || (x == 0 && temp == 1))
+			{
+				a.data[k / 32] += pow(2, k % 32);
+				temp = 0;
+			}
+			k++;
+			DivideString(st, 2);
 		}
-		k++;
-		DivideString(st, 2);
+		for (int i = k+1; i < 128; i++)
+		{
+			a.data[i / 32] += pow(2, i % 32);
+		}
+	}
+	else
+	{
+		while (st.length() != 0)
+		{
+			if ((st[st.length() - 1] - '0') % 2 == 1)
+			{
+				a.data[k / 32] += pow(2, k % 32);
+
+			}
+			k++;
+			DivideString(st, 2);
+		}
 	}
 	return is;
 }
