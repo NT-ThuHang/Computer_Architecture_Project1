@@ -147,13 +147,14 @@ string QInt::PrintQInt()
 {
 	int x, sign = 0;
 	string powerOf2, res = "";
+	QInt temp = *this;
 	if ((data[0] >> 31) & 1 == 1) {
 		sign = 1;
-		this->convert2complement();
+		temp.convert2complement();
 	}
 
 	for (int i = 0; i < 4; i++) {
-		x = data[i];
+		x = temp.data[i];
 		for (int j = 0; j < 32; j++) {
 			if (i == 0 && j == 31)
 				continue;
