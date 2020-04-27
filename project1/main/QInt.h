@@ -12,6 +12,15 @@ public:
 	void convert2complement();
 	void ScanQInt(string s);
 	string PrintQInt();
+
+	bool operator < (QInt a);
+	bool operator > (QInt a);
+	bool operator == (QInt a);
+	bool operator <= (QInt a);
+	bool operator >= (QInt a);
+	QInt operator = (QInt a);
+	friend class Comparison;
+
 	QInt();
 	~QInt();
 };

@@ -1,4 +1,5 @@
 ﻿#include "QInt.h"
+#include "Comparison.h"
 
 /*Hàm chia chuỗi cho 2
 Đầu vào: chuỗi s
@@ -129,17 +130,9 @@ void QInt::ScanQInt(string s)
 		s = divideBy2(s);
 		i--;
 	}
-	/*if (sign == 1)
-		data[0] |= 1 << 31;*/
+
 	if (sign == 1)
 		this->convert2complement();
-	/*for (int i = 0; i < 4; i++) {
-		for (int j = 31; j >=0; j--) {
-			int x = (data[i] >> j) & 1;
-			cout << x;
-		}
-		cout << endl;
-	}*/
 }
 
 /* Hàm xuất dữ liệu cho QInt */
@@ -169,6 +162,55 @@ string QInt::PrintQInt()
 	if (sign == 1)
 		return "-" + res;
 	return res;
+}
+
+bool QInt::operator<(QInt a)
+{
+	Comparison comp;
+	if (comp.compare(*this, a) == -1)
+		return true;
+	return false;
+}
+
+bool QInt::operator>(QInt a)
+{
+	Comparison comp;
+	if (comp.compare(*this, a) == 1)
+		return true;
+	return false;
+}
+
+bool QInt::operator==(QInt a)
+{
+	Comparison comp;
+	if (comp.compare(*this, a) == 0)
+		return true;
+	return false;
+}
+
+bool QInt::operator<=(QInt a)
+{
+	Comparison comp;
+	int res = comp.compare(*this, a);
+	if (res == -1 | res == 0)
+		return true;
+	return false;
+}
+
+bool QInt::operator>=(QInt a)
+{
+	Comparison comp;
+	int res = comp.compare(*this, a);
+	if (res == 1 | res == 0)
+		return true;
+	return false;
+}
+
+QInt QInt::operator=(QInt a)
+{
+	Comparison comp;
+	comp.assign(*this, a);
+	return *this;
 }
 
 QInt::QInt()
