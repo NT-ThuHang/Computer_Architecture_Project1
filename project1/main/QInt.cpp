@@ -102,7 +102,7 @@ Cách hoạt động muốn chuyển sang số bù 2 và ngược lại:
 void QInt::convert2complement()
 {
 	int i = 127;
-	while (i >= 0 && data[i / 32] >> (31 - i % 32) == 0) {
+	while (i >= 0 && ((data[i / 32] >> (31 - i % 32)) & 1) == 0) {
 		i--;
 	}
 	i--;
@@ -148,7 +148,7 @@ string QInt::PrintQInt()
 	int x, sign = 0;
 	string powerOf2, res = "";
 	QInt temp = *this;
-	if ((data[0] >> 31) & 1 == 1) {
+	if (((data[0] >> 31) & 1) == 1) {
 		sign = 1;
 		temp.convert2complement();
 	}
@@ -158,14 +158,14 @@ string QInt::PrintQInt()
 		for (int j = 0; j < 32; j++) {
 			if (i == 0 && j == 31)
 				continue;
-			if (x & 1 == 1) {
+			if ((x & 1) == 1) {
 				powerOf2 = Pow("2", (3 - i) * 32 + j);
 				res = sum(res, powerOf2);
 			}
 			x >>= 1;
 		}
 	}
-	
+
 	if (sign == 1)
 		return "-" + res;
 	return res;
