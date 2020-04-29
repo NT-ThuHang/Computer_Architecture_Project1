@@ -192,7 +192,7 @@ bool QInt::operator<=(QInt a)
 {
 	Comparison comp;
 	int res = comp.compare(*this, a);
-	if (res == -1 | res == 0)
+	if (res == -1 || res == 0)
 		return true;
 	return false;
 }
@@ -201,7 +201,7 @@ bool QInt::operator>=(QInt a)
 {
 	Comparison comp;
 	int res = comp.compare(*this, a);
-	if (res == 1 | res == 0)
+	if (res == 1 || res == 0)
 		return true;
 	return false;
 }
