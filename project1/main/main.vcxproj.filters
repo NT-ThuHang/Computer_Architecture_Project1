@@ -24,6 +24,9 @@
     <ClInclude Include="Comparison.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BitManipulation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Comparison.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BitManipulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
