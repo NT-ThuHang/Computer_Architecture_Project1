@@ -4,7 +4,7 @@
 int main()
 {
 	// Thy test
-	string s = "-4312413414";
+	/*string s = "-4312413414";
 	string t = "-1341251451243";
 	QInt x, y;
 	x.ScanQInt(s);
@@ -16,5 +16,7 @@ int main()
 		cout << "NO" << endl;
 
 	x = y;
-	cout << x.PrintQInt() << endl;
+	cout << x.PrintQInt() << endl;*/
+
+	return 0;
 }
