@@ -1,5 +1,6 @@
 ﻿#include "QInt.h"
 #include "Comparison.h"
+#include "BitManipulation.h"
 
 /*Hàm chia chuỗi cho 2
 Đầu vào: chuỗi s
@@ -211,6 +212,36 @@ QInt QInt::operator=(QInt a)
 	Comparison comp;
 	comp.assign(*this, a);
 	return *this;
+}
+
+QInt& QInt::operator<<(int y)
+{
+	QInt res = BitManipulation::logicalLeftShift(*this, y);
+	return res;
+}
+
+QInt& QInt::operator>>(int y)
+{
+	QInt res = BitManipulation::logicalRightShift(*this, y);
+	return res;
+}
+
+QInt& QInt::arithRightShift(int y)
+{
+	QInt res = BitManipulation::arithmeticRightShift(*this, y);
+	return res;
+}
+
+QInt& QInt::rol()
+{
+	QInt res = BitManipulation::leftRotate(*this);
+	return res;
+}
+
+QInt& QInt::ror()
+{
+	QInt res = BitManipulation::rightRotate(*this);
+	return res;
 }
 
 QInt::QInt()

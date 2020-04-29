@@ -21,6 +21,13 @@ public:
 	QInt operator = (QInt a);
 	friend class Comparison;
 
+	QInt& operator<<(int y);
+	QInt& operator>>(int y);
+	QInt& arithRightShift(int y);
+	QInt& rol();	// left rotate
+	QInt& ror();	// right rotate
+	friend class BitManipulation;
+
 	QInt();
 	~QInt();
 };
