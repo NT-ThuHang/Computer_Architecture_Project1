@@ -39,7 +39,7 @@ QInt& BitManipulation::logicalLeftShift(const QInt& x, int y)
 	string bin = BitManipulation::QIntToBinStr(x);
 
 	// Dời (128 - y) bit cuối sang trái y đơn vị
-	int i = 0;
+	long long i = 0;
 	for (; i < bin.length() - y; i++)
 	{
 		bin[i] = bin[i + y];
@@ -60,7 +60,7 @@ QInt& BitManipulation::logicalRightShift(const QInt& x, int y)
 	string bin = BitManipulation::QIntToBinStr(x);
 
 	// Dời (128 - y) bit đầu sang phải y đơn vị
-	int i = bin.length() - 1;
+	long long i = bin.length() - 1;
 	for (; i >= y; i--)
 	{
 		bin[i] = bin[i - y];
@@ -84,7 +84,7 @@ QInt& BitManipulation::arithmeticRightShift(const QInt& x, int y)
 	string bin = BitManipulation::QIntToBinStr(x);
 
 	// Dời (128 - y) bit đầu sang phải y đơn vị
-	int i = bin.length() - 1;
+	long long i = bin.length() - 1;
 	for (; i >= y; i--)
 	{
 		bin[i] = bin[i - y];
