@@ -1,1 +1,2 @@
 1. https://indepth.dev/how-to-round-binary-numbers/ 
+2. http://www.toves.org/books/float/
