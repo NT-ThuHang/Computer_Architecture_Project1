@@ -22,8 +22,8 @@ public:
 	QInt& operator<<(int y);
 	QInt& operator>>(int y);	// theo c++ thì toán tử >> là shift số học
 	QInt& logicalRightShift(int y);
-	QInt& rol();	// left rotate
-	QInt& ror();	// right rotate
+	QInt& rol(int y);	// left rotate
+	QInt& ror(int y);	// right rotate
 
 	QInt& operator + (QInt);
 	QInt& operator - (QInt);

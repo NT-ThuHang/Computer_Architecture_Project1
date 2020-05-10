@@ -15,8 +15,8 @@ public:
 	static QInt& arithmeticRightShift(const QInt& x, int y);
 
 	// Hàm thao tác cho ror, rol
-	static QInt& leftRotate(const QInt& x);
-	static QInt& rightRotate(const QInt& x);
+	static QInt& leftRotate(const QInt& x, int y);
+	static QInt& rightRotate(const QInt& x, int y);
 	BitManipulation();
 	~BitManipulation();
 };

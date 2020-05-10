@@ -298,15 +298,15 @@ QInt& QInt::logicalRightShift(int y)
 	return res;
 }
 
-QInt& QInt::rol()
+QInt& QInt::rol(int y)
 {
-	QInt res = BitManipulation::leftRotate(*this);
+	QInt res = BitManipulation::leftRotate(*this, y);
 	return res;
 }
 
-QInt& QInt::ror()
+QInt& QInt::ror(int y)
 {
-	QInt res = BitManipulation::rightRotate(*this);
+	QInt res = BitManipulation::rightRotate(*this, y);
 	return res;
 }
 

@@ -112,30 +112,38 @@ QInt& BitManipulation::arithmeticRightShift(const QInt& x, int y)
 	return res;
 }
 
-QInt& BitManipulation::leftRotate(const QInt& x)
+QInt& BitManipulation::leftRotate(const QInt& x, int y)
 {
-	// Lưu bit ngoài cùng bên trái của data[0]
-	int mostLeftBit = (x.data[0] >> 31) & 1;
-
-	QInt res = BitManipulation::logicalLeftShift(x, 1);
-	// Chuyển bit về cuối
-	if (mostLeftBit == 1)
+	QInt res = x;
+	for (int i = 0; i < (y % 128); i++)
 	{
-		res.data[3] = res.data[3] | 1;
+		// Lưu bit ngoài cùng bên trái của data[0]
+		int mostLeftBit = (res.data[0] >> 31) & 1;
+
+		res = BitManipulation::logicalLeftShift(res, 1);
+		// Chuyển bit về cuối
+		if (mostLeftBit == 1)
+		{
+			res.data[3] = res.data[3] | 1;
+		}
 	}
 	return res;
 }
 
-QInt& BitManipulation::rightRotate(const QInt& x)
+QInt& BitManipulation::rightRotate(const QInt& x, int y)
 {
-	// Lưu bit ngoài cùng bên phải của data[3]
-	int mostRightBit = x.data[0] & 1;
-
-	QInt res = BitManipulation::logicalRightShift(x, 1);
-	// Chuyển bit về đầu
-	if (mostRightBit == 1)
+	QInt res = x;
+	for (int i = 0; i < (y % 128); i++)
 	{
-		res.data[0] = res.data[0] | (1 << 31);
+		// Lưu bit ngoài cùng bên phải của data[3]
+		int mostRightBit = res.data[0] & 1;
+
+		res = BitManipulation::logicalRightShift(res, 1);
+		// Chuyển bit về đầu
+		if (mostRightBit == 1)
+		{
+			res.data[0] = res.data[0] | (1 << 31);
+		}
 	}
 	return res;
 }
