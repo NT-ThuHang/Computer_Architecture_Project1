@@ -15,8 +15,11 @@ private:
 	int data[4];
 	int K = (1 << 14) - 1;//2^14-1
 public:
+	// Hàm lấy bit và set bit
 	void setBit(int pos, int bit);
 	int getBit(int pos);
+	// Hàm tính phần thập phân của Qfloat ở dạng chuỗi
+	string negativePowOf2(string decimal);
 
 	// Hàm kiểm tra các trường hợp đặc biệt
 	bool isNegative();
@@ -24,6 +27,7 @@ public:
 	bool isZero();
 	bool isNaN();
 	bool isDenormalized();
+	// Hàm reset data của Qfloat = 0
 	void resetQfloat();
 
 	// Hàm so sánh Qfloat
@@ -33,9 +37,8 @@ public:
 	bool operator == (Qfloat);
 	bool operator <= (Qfloat);
 	bool operator >= (Qfloat);
-	Qfloat& operator = (const Qfloat& n);
 
-	// Hàm chuyển đổi giữa Qfloat và dấu chấm động
+	// Hàm chuyển đổi giữa Qfloat và dạng dấu chấm động
 	string DectoBin();
 	static Qfloat& BinToDec(const string&);
 

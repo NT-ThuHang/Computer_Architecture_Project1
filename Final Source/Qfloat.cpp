@@ -34,6 +34,27 @@ string DivideBy2(string s)
 	}
 	return res;
 }
+
+// Hàm cộng 2 chuỗi
+string Sum(string a, string b)
+{
+	while (a.length() < b.length())
+		a = "0" + a;
+	while (a.length() > b.length())
+		b = "0" + b;
+	int r = 0, x;
+	string res = "";
+	for (int i = a.length() - 1; i >= 0; i--) {
+		x = (a[i] - '0') + (b[i] - '0') + r;
+		res = to_string(x % 10) + res;
+		r = x / 10;
+	}
+
+	if (r > 0)
+		res = to_string(r) + res;
+	return res;
+}
+
 /*Nhan chuoi cho 1 so nguyen*/
 string Multiply(string a, int b)
 {
@@ -47,6 +68,38 @@ string Multiply(string a, int b)
 	if (r > 0)
 		res = to_string(r) + res;
 	return res;
+}
+
+/* Hàm nhân chuỗi a và chuỗi b */
+string Multiplication(string a, string b)
+{
+	string ans = "";
+	string res = "";
+	int n = b.length();
+	for (int i = 0; i < b.length(); i++) {
+		res = "";
+		for (int k = 0; k < i; k++)
+			res += "0";
+		string t = Multiply(a, b[n - 1 - i] - '0');
+		res = t + res;
+		ans = Sum(ans, res);
+	}
+	return ans;
+}
+
+/* Hàm tính x^k, với x: chuỗi, k: số nguyên */
+string Power(string x, int k)
+{
+	if (k == 0)
+		return "1";
+	if (k == 1)
+		return x;
+	string tmp = Power(x, k / 2);
+	tmp = Multiplication(tmp, tmp);
+	if (k % 2 == 1)
+		return Multiplication(tmp, x);
+	else
+		return tmp;
 }
 
 // Hàm nhân phần thập phân cho 2 để chuyển về nhị phân của số thực
@@ -71,89 +124,29 @@ string decimalSolve(string decimal, string& res)
 	}
 	return decimal;
 }
-/*Hàm Cộng trên chuỗi 2 số dùng cho cả số nguyên lẫn chấm động*/
-void Add(string& st, string x)
+
+// Hàm tính phần thập phân của Qfloat ở dạng chuỗi
+string Qfloat::negativePowOf2(string decimal)
 {
-	bool stt1 = 1 - (st.find(".") == string::npos);
-	bool stt2 = 1 - (x.find(".") == string::npos);
-	int a = st.length(), b = x.length();
-	if (stt1)
-		a = st.find(".");
-	if (stt2)
-		b = x.find(".");
-	if (a > b)
-		x.insert(0, a - b, '0');
-	else
-		st.insert(0, b - a, '0');
-	a = a > b ? a : b;
-	b = a;
-	if (stt1 == 1 && stt2 == 0)
-	{
-		x.insert(x.length(), 1, '.');
-		x.insert(a + 1, st.length() - x.length(), '0');
+	if (decimal.length() == 0)
+		return "";
+
+	int n = decimal.length();
+	string pow2 = "1";
+	for (int i = 0; i < n; i++)
+		pow2 += "0";
+
+	string res = "";
+	for (int i = 0; i < n; i++) {
+		pow2 = DivideBy2(pow2);
+		if (decimal[i] == '1')
+			res = Sum(res, pow2);
 	}
-	else if (stt1 == 0 && stt2 == 1)
-	{
-		st.insert(st.length(), 1, '.');
-		st.insert(a + 1, x.length() - st.length(), '0');
-	}
-	else
-		if (stt1 == 1 && stt2 == 1)
-		{
-			if (st.length() < x.length())
-				st.insert(st.length(), x.length() - st.length(), '0');
-			else
-				x.insert(x.length(), st.length() - x.length(), '0');
-		}
-	int l1 = st.length();
-	int temp = 0;
-	int res;
-	string ans;
-	for (int i = l1 - 1; i >= 0; i--)
-	{
-		if (st[i] == '.')
-		{
-			ans.insert(0, 1, '.');
-			continue;
-		}
-		res = (st[i] - '0') + (x[i] - '0') + temp;
-		ans.insert(0, 1, (char)(res % 10 + '0'));
-		temp = res / 10;
-	}
-	if (temp != 0)
-		ans.insert(0, 1, (char)(temp + '0'));
-	st = ans;
-}
-// DivideBy2 chia số nguyên (co du)
-void divideBy2HaveMod(string& st)
-{
-	int n = st.length();
-	int temp = 0;
-	string ans;
-	for (int i = 0; i < st.length(); i++)
-	{
-		if (st[i] == '.')
-		{
-			ans.insert(ans.length(), 1, '.');
-			continue;
-		}
-		temp = temp * 10 + (st[i] - '0');
-		ans.insert(ans.length(), 1, (char)(temp / 2 + '0'));
-		temp = temp % 2;
-	}
-	while (ans[0] == '0')
-		ans.erase(0, 1);
-	if (ans[0] == '.')
-		ans.insert(0, 1, '0');
-	if (temp != 0 && ans.find(".") == string::npos)
-		ans.insert(ans.length(), 1, '.');
-	while (temp != 0)
-	{
-		temp = temp * 10;
-		ans.insert(ans.length(), 1, (char)(temp / 2 + '0'));
-		temp = temp % 2;
-	}
-	st = ans;
+
+	string added0 = "";
+	for (int i = 0; i < n - res.length(); i++)
+		added0 += "0";
+	return added0 + res;
 }
 
 int Qfloat::compare(Qfloat a, Qfloat b)
@@ -263,6 +256,7 @@ bool Qfloat::isDenormalized()
 	return false;
 }
 
+// Hàm reset data Qfloat = 0
 void Qfloat::resetQfloat()
 {
 	for (int i = 0; i < 4; i++)
@@ -306,12 +300,6 @@ bool Qfloat::operator>=(Qfloat a)
 	return false;
 }
 
-Qfloat& Qfloat::operator=(const Qfloat& n)
-{
-	return (*this);
-}
-
-
 // Hàm chuyển từ Qfloat sang dấu chấm động
 string Qfloat::DectoBin()
 {
@@ -330,90 +318,108 @@ string Qfloat::DectoBin()
 // Hàm xuất Qfloat
 string Qfloat::PrintQfloat()
 {
-	Qfloat a = *this;
+	int sign = 0, i;
+	if (((data[0] >> 31) & 1) == 1)
+		sign = 1;
 
-	if (a.isInf()) {
-		if (a.isNegative()) return "-Inf";
-		return "Inf";
-	}
-	if (a.isNaN())
-		return "NaN";
-	if (a.isZero())
+	if (this->isZero())
 		return "0";
-	if (a.isDenormalized())
+
+	if (this->isInf()) {
+		if (sign == 1)
+			return "-Inf";
+		else
+			return "Inf";
+	}
+
+	if (this->isNaN())
+		return "NaN";
+
+	if (this->isDenormalized())
 		return "Denormalized";
 
-	//Lấy exp;
-	int exp = 0;
-	int vt = 15;
-	while (vt > 0)
-	{
-		if ((a.data[vt / 32] >> (31 - vt % 32)) & 1)
-			exp |= (1 << (15 - vt));
-		vt--;
+	Qfloat temp = *this;
+
+	int expo = 0;
+	bool haveIntegral = true, haveDecimal = false;
+	for (int i = 1; i <= 15; i++) {
+		if (((temp.data[0] >> (31 - i)) & 1) == 1)
+			expo |= (1 << (15 - i));
 	}
-	exp = exp - K;
-	// Vị trí số 1 đầu tiên
-	//Với trường hợp số biểu diễn được thì vị trí số 1 đầu tiên luôn bằng 0
-	//Nếu trường hợp không chuẩn hóa được thì chưa chắc
-	int VTso1 = 0;
-	if (exp == -K)
-	{
-		exp = -K + 1;
-		for (int i = 16; i < 128; i++)
-			if (a.getBit(i) == 1)
-			{
-				VTso1 = i;
-				break;
-			}
-		if (VTso1 == 0)
-			return "0";
+	expo -= 16383;
+
+	string integral = "", decimal = "";
+	int count = 0;
+	if (expo > 0) {
+		i = 16;
+		integral = "1";
+		while (count < expo) {
+			if (i < 128)
+				integral += to_string((data[i / 32] >> (31 - i % 32)) & 1);
+			else
+				integral += "0";
+			i++;
+			count++;
+		}
 	}
-	string temp;// lưu giá trị nhị phân
-	vt = 16;
-	while (vt < 128)
-	{
-		if ((a.data[vt / 32] >> (31 - vt % 32)) & 1)
-			temp.insert(temp.length(), 1, '1');
+	else if (expo == 0) {
+		int countBit1 = 0;
+		int j = 16;
+		while (j < 128) {
+			if (((data[j / 32] >> (31 - j % 32)) & 1) == 1)
+				countBit1++;
+			j++;
+		}
+
+		if (countBit1 == 0) {
+			integral = "0";
+			haveDecimal = false;
+		}
 		else
-			temp.insert(temp.length(), 1, '0');
-		vt++;
+			integral = "1";
+		i = 16;
 	}
-	while (temp.length() > 0 && temp[temp.length() - 1] == '0')
-		temp.erase(temp.length() - 1, 1);
-	temp.insert(0, 1, '1');
-	string x = "0";//phan nguyen
-	if (exp < 0)
-	{
-		while (exp < 0)
-		{
-			temp.insert(0, 1, '0');
-			exp++;
+	else {
+		integral = "0";
+		for (int i = 0; i < abs(expo) - 1; i++)
+			decimal += "0";
+		decimal += "1";
+		i = 16;
+	}
+
+	while (i < 128) {
+		decimal += to_string((data[i / 32] >> (31 - i % 32)) & 1);
+		i++;
+	}
+
+	string res = "", powerOf2 = "";
+	int n = integral.length();
+	for (int i = 0; i < n; i++) {
+		if (integral[i] == '1') {
+			powerOf2 = Power("2", n - 1 - i);
+			res = Sum(res, powerOf2);
 		}
 	}
-	else if (exp > 112)
-	{
-		temp.insert(temp.length(), exp - 112, '1');
+	if (res.length() == 0)
+		res = "0";
+
+	//Xóa những số 0 ở cuối dãy decimal
+	while (decimal.length() > 0 && decimal[decimal.length() - 1] == '0')
+		decimal.erase(decimal.length() - 1, 1);
+
+
+	string tmp = negativePowOf2(decimal);
+
+	if (tmp.length() == 0) {
+		if (sign == 1)
+			return "-" + res;
+		else
+			return res;
 	}
-	string tmp = "1";
-	for (int i = exp; i >= 0; i--)
-	{
-		if (temp[i] == '1')
-			Add(x, tmp);
-		tmp=Multiply(tmp,2);
-	}
-	string tmp1 = "1";
-	for (int i = exp + 1; i < temp.length(); i++)
-	{
-		divideBy2HaveMod(tmp1);
-		if (temp[i] == '1')
-		{
-			Add(x, tmp1);
-		}
-	}
-	if ((a.data[0] >> 31) & 1)
-		x.insert(0, 1, '-');
-	return x;
+
+	if (sign == 1)
+		return "-" + res + "." + tmp;
+	return res + "." + tmp;
 }
 
 // Hàm chuyển từ số chậm động sang Qfloat
@@ -508,6 +514,11 @@ Qfloat& Qfloat::ScanQfloat(const string& st)
 	bool haveIntegral = false, haveDecimal = false;
 	if (s.length() == 0)
 		return *this;
+
+	if (s == "0" || s == "-0") {
+		this->resetQfloat();
+		return *this;
+	}
 
 	if (s[0] == '-') {
 		s.erase(0, 1);
