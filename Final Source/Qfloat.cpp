@@ -65,7 +65,7 @@ string decimalSolve(string decimal, string& res)
 		res += "0";
 
 	int j = decimal.length() - 1;
-	while (j >= 0 and decimal[j] == '0') {
+	while (j >= 0 && decimal[j] == '0') {
 		decimal.erase(j, 1);
 		j--;
 	}
